@@ -121,4 +121,5 @@ for file in all_files:
         copy(file, file_new)
 print('finished.')
 
+copy('org_bids/dataset_description.json' 'BIDS/')
 ## can run fmriprep
