@@ -52,3 +52,18 @@ vertex_data = cortex.Vertex(np.append(file_surf.data.parts['left'],file_surf.dat
                               subject, vmax=1, vmin=-1, cmap=cmap_aa)
 cortex.quickshow(vertex_data)
 plt.show()
+
+
+####### Add ROI
+import os
+import nibabel.freesurfer.io as fsio
+import numpy as np
+import cortex
+label_file = '/home/clancy/TemplateFlow/BN_Atlas_freesurfer/fsaverage/label/lh.BN_Atlas.annot'
+label_img = fsio.read_annot(label_file)[0]
+mask = np.zeros_like(label_img)
+mask[mask==22] = 1
+V = cortex.dataset.Vertex(mask, 'fsaverage')
+cortex.quickshow(V)
+plt.show()
+
