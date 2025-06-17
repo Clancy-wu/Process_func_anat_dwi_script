@@ -66,4 +66,19 @@ mask[mask==22] = 1
 V = cortex.dataset.Vertex(mask, 'fsaverage')
 cortex.quickshow(V)
 plt.show()
+####### Add ROI
+import os
+import nibabel.freesurfer.io as fsio
+import numpy as np
+import matplotlib.pyplot as plt
+import cortex
+label_file_lh = '/home/clancy/TemplateFlow/BN_Atlas_freesurfer/fsaverage/label/lh.BN_Atlas.annot'
+label_file_rh = '/home/clancy/TemplateFlow/BN_Atlas_freesurfer/fsaverage/label/rh.BN_Atlas.annot'
+lh_data = fsio.read_annot(label_file_lh)[0]
+rh_data = fsio.read_annot(label_file_rh)[0]
+both_data = np.append(lh_data, rh_data)
+mask = np.zeros_like(both_data)
+mask[(both_data==23) | (both_data==124)] = 1
+V = cortex.Vertex(mask, subject="fsaverage", cmap=None)
+cortex.add_roi(data=V, name='MFG', open_inkscape=True, add_path=True, overlay_file='rois.svg')
 
